@@ -1,0 +1,15 @@
+TARGET = ../bin/reflex
+TEMPLATE = app
+
+# gui part
+# HEADERS += gui.h picmanager.h
+# SOURCES += main.cpp gui.cpp picmanager.cpp
+# LIBS += -ladw -lqrbxml
+
+# mathematical part
+# -lqlook
+HEADERS += datar.h
+SOURCES += main.cpp datar.cpp
+
+# setups part
+# QT+=xml

@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<!DOCTYPE picture SYSTEM "/media/SMALLFLASH/reflex/src/hexagon.dtd">
+<link rel="stylesheet" type="text/css" href="hexagon.css" />
+<picture>
+</picture>
+
+<!-- picture class="" style="" format="">
+	<grid class="" style="" type="" offset="">
+		<axis type="" direction="" min="" max="" major="" minor="" skip="" />
+		<graphic pen="" coord="" color="" />
+	</grid>
+	<legend class="" style="" rows="" columns="">
+		<label class="" style="" text="" />
+	</legend>
+	<label class="" style="" text="" />
+</picture -->
+
+<!-- PICTURE title="" width="" height="" bgcolor="">
+	<grid width="" top="" left="" height="" bgcolor="" fgcolor="" offset=";" fontcolor="">
+		<axis title="" column="" type="" max="" min="" steps="" substeps="" style="" direction=";" />
+		<axis title="" column="" type="" max="" min="" steps="" substeps="" style="" direction=";" />
+		<graphic title="" column="" fgcolor="" style="" width="" />
+	</grid>
+</PICTURE -->
+
+

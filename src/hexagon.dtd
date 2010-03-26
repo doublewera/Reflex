@@ -1,0 +1,94 @@
+<!ENTITY % Digit "0|1|2|3|4|5|6|7|8|9">
+<!ENTITY % HexDigit "%Digit;|A|a|B|b|C|c|D|d|E|e|F|f">
+<!ENTITY % Number "(%Digit;)+">
+<!ENTITY % Int "(+|-)?%Number;">
+<!ENTITY % FloatPoint "%Int;?.%Number;">
+<!ENTITY % FloatE "(%Int;|%FloatPoint;)(E|e)(+|-)%Number;">
+<!ENTITY % Color "#%HexDigit;%HexDigit;%HexDigit;%HexDigit;%HexDigit;%HexDigit;">
+<!ENTITY % URI "CDATA">
+<!ENTITY % Text "CDATA">
+<!ENTITY % StyleSheet "CDATA">
+<!ENTITY % coreattrs
+	id	ID		#IMPLIED
+	class	CDATA		#IMPLIED
+	style	%StyleSheet;	#IMPLIED
+>
+
+<!ENTITY % DataFormat "(double|datetime|CDATA)">
+<!ENTITY % DeltaDataFormat "CDATA">
+<!ENTITY % ImgFormat "(SVG|PNG|JPEG|BMP)">
+<!ENTITY % TypeOfGrid "(cartesian2d|cartesian3d|polar|cylindrical|spherical)">
+<!ENTITY % BiPoint "%Number;;%Number;">
+<!ENTITY % GridLineCounting "(%Number;|%DataFormat;/%DeltaDataFormat;|%DataFormat;(;%DataFormat;)*)">
+
+<!ENTITY % PenSelector "(square|star|pentagon|hexagon|round|%URI;)">
+
+<!ELEMENT picture (grid | label | legend)*>
+<!ATTLIST picture
+	%coreattrs
+	format	%ImgFormat;	"PNG"
+>
+
+<!ELEMENT grid (axis, axis, axis?, graphic*)>
+<!ATTLIST grid
+	%coreattrs
+	type	%TypeOfGrid;	"cartesian2d"
+	offset	%BiPoint;	"0;0"
+>
+
+<!ELEMENT graphic EMPTY>
+<!ATTLIST graphic
+	pen	%PenSelector;	"square"
+	coord
+	color	%Color|"auto";	"auto"
+>
+
+<!ELEMENT axis EMPTY>
+<!ATTLIST axis
+	type
+	direction	%BiPoint;	#REQUIRED
+	min	%DataFormat|"auto";	"auto"
+	max	%DataFormat|"auto";	"auto"
+	major	%GridLineCounting;	"1"
+	minor	%GridLineCounting;	"1"
+	skip	%Number;	"0"
+>
+<!--
+    * skip="0" - не искать ошибок
+    * skip="X", x<0 - не рисовать, если разность между значениями в предыдущей и последующей точках меньше X
+    * skip="X", x>0 - не рисовать, если разность между значениями в предыдущей и последующей точках больше X 
+-->
+
+<!ELEMENT label EMPTY>
+<!ATTLIST label
+	%coreattrs
+	text	CDATA	#IMPLIED
+>
+
+<!ELEMENT legend (marker)+>
+<!ATTLIST legend
+	%coreattrs
+	type
+	offset
+	rows	%Number; #IMPLIED
+	cols	%Number; "1"
+>
+
+<!ELEMENT marker EMPTY>
+<!ATTLIST marker
+	text	CDATA	#IMPLIED
+	pen	%PenSelector;	"square"
+	color	%Color|"auto";	"auto"
+>
+
+<!--
+coord - Координаты точки, описанные одним из двух способов:
+
+    * Три значения, разделенные точками с запятой. В этом случае векторная формула для вычисления точки берется из типа сетки. 
+Значения же соответствуют xyz в декартовой прямоугольной и r в полярной и цилиндрической соответственно. Формула может состоять из 
+констант, шести (+-*/%\) арифметических операций, имен ($colName) и номеров (#colNumber) колонок, а также функций, которые в том 
+числе, пользователь может писать сам. Имена функций должны состоять из цифр, букв и знаков _ и начинаться с буквы. Аргументы пишутся в 
+скобочках. "%" - остаток от деления. "\" - деление нацело.
+    * Одно значение: векторная запись координат точки. В качестве векторов выступают оси. Строка должна начинаться символом "^". 
+
+-->
